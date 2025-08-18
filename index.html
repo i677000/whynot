@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Why Not — Meringue Rolls & Desserts • Christchurch</title>
+  <meta name="description" content="Handmade meringue roll desserts. Made to order in 24 hours. Free delivery across Christchurch. Order via the form — pay on delivery." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" href="images/logo.png">
+<link rel="shortcut icon" href="images/logo.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            creamy: '#F3EAE1',
+            cream:  '#F7F1EA',
+            rose:   '#F4C7CD',
+            vanilla:'#FFF6EE',
+            cocoa:  '#574A45',
+          },
+          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background: radial-gradient(ellipse at 30% 10%, #FFF9F3 0%, #F7F1EA 60%, #F3EAE1 100%); }
+    .fallback { background: #f7f1ea url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23f7f1ea"/><text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="%23ccc" font-size="20">No Image</text></svg>') center/50% no-repeat; }
+  </style>
+</head>
+<body class="font-sans text-cocoa selection:bg-rose/30">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-cream/70 bg-cream/90 border-b border-rose/20">
+    <div class="mx-auto max-w-6xl px-4 py-3 flex items-center gap-4">
+      <img src="images/logo.png" alt="Why Not logo" onerror="this.classList.add('fallback')" class="h-9 w-9 rounded-full ring-2 ring-rose/40 shadow object-cover" />
+      <div class="text-lg font-extrabold tracking-tight">Why&nbsp;Not</div>
+      <nav class="ml-auto text-sm font-semibold">
+        <ul class="flex gap-4">
+          <li><a href="#home" class="hover:text-rose">Home</a></li>
+          <li><a href="#about" class="hover:text-rose">About</a></li>
+          <li><a href="#gallery" class="hover:text-rose">Gallery</a></li>
+          <li><a href="#menu" class="hover:text-rose">Menu</a></li>
+          <li><a href="#order" class="hover:text-rose">Order</a></li>
+          <li><a href="#contact" class="hover:text-rose">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="relative overflow-hidden">
+    <div class="mx-auto max-w-6xl px-4 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-[1.05]">
+          Meringue Rolls & Desserts
+          <span class="block text-rose">Made to order in 24 hours</span>
+        </h1>
+        <p class="mt-4 text-lg md:text-xl text-cocoa/80">
+          Christchurch-based, handcrafted and light as a cloud. Free delivery across the city. Pay on delivery.
+        </p>
+        <div class="mt-6 flex gap-3">
+          <a href="#order" class="inline-flex items-center rounded-2xl px-5 py-3 bg-rose text-cocoa font-bold shadow hover:shadow-lg active:shadow-md">Order Now</a>
+          <a href="#gallery" class="inline-flex items-center rounded-2xl px-5 py-3 bg-vanilla border border-rose/40 hover:bg-white">See Gallery</a>
+        </div>
+      </div>
+      <div class="relative">
+        <div class="rounded-3xl bg-vanilla/80 ring-1 ring-rose/30 p-6 shadow-lg">
+          <img src="images/hero-roll.jpg" alt="Signature meringue roll" onerror="this.classList.add('fallback')" class="rounded-2xl w-full object-cover aspect-[4/3]" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="py-16 md:py-24">
+    <div class="mx-auto max-w-4xl px-4 text-center">
+      <h2 class="text-3xl md:text-4xl font-extrabold">What makes us special</h2>
+      <p class="mt-4 text-lg text-cocoa/80">
+        Think Pavlova, but rolled and even better. Our meringue rolls are crisp on the outside, soft inside, and filled with fresh cream and seasonal fruit.
+        Every dessert is hand-made to order — never frozen — and ready within 24 hours.
+      </p>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" class="py-16 md:py-24 bg-vanilla/60 border-y border-rose/20">
+    <div class="mx-auto max-w-6xl px-4">
+      <div class="flex items-end justify-between gap-6">
+        <h2 class="text-3xl font-extrabold">Gallery</h2>
+        <a class="text-rose font-semibold hover:underline" href="https://www.instagram.com/whynot.adessert" target="_blank" rel="noopener">More on Instagram →</a>
+      </div>
+      <div class="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <img src="images/g1.jpg" alt="Meringue roll with berries" onerror="this.classList.add('fallback')" class="rounded-2xl aspect-square object-cover ring-1 ring-rose/30"/>
+        <img src="images/g2.jpg" alt="Pavlova-style roll" onerror="this.classList.add('fallback')" class="rounded-2xl aspect-square object-cover ring-1 ring-rose/30"/>
+        <img src="images/g3.jpg" alt="Meringue kisses" onerror="this.classList.add('fallback')" class="rounded-2xl aspect-square object-cover ring-1 ring-rose/30"/>
+        <img src="images/g4.jpg" alt="Celebration roll" onerror="this.classList.add('fallback')" class="rounded-2xl aspect-square object-cover ring-1 ring-rose/30"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu -->
+  <section id="menu" class="py-16 md:py-24">
+    <div class="mx-auto max-w-6xl px-4">
+      <h2 class="text-3xl font-extrabold text-center">What you can order</h2>
+      <p class="mt-3 text-center text-cocoa/70">Custom flavours are welcome — ask in the order form.</p>
+      <div class="mt-10 grid md:grid-cols-3 gap-6">
+        <div class="rounded-3xl p-6 bg-vanilla ring-1 ring-rose/30 shadow">
+          <img src="images/m1.jpg" alt="Berry Meringue Roll" onerror="this.classList.add('fallback')" class="rounded-2xl aspect-[4/3] object-cover"/>
+          <h3 class="mt-4 font-bold text-xl">Berry Meringue Roll</h3>
+          <p class="text-cocoa/70">Fresh whipped cream, strawberries & blueberries.</p>
+          <p class="mt-2 font-semibold">From $45 (serves 6–8)</p>
+        </div>
+        <div class="rounded-3xl p-6 bg-vanilla ring-1 ring-rose/30 shadow">
+          <img src="images/m2.jpg" alt="Classic Pavlova Roll" onerror="this.classList.add('fallback')" class="rounded-2xl aspect-[4/3] object-cover"/>
+          <h3 class="mt-4 font-bold text-xl">Classic Pavlova Roll</h3>
+          <p class="text-cocoa/70">Crisp outside, soft inside. Light & creamy.</p>
+          <p class="mt-2 font-semibold">From $42 (serves 6–8)</p>
+        </div>
+        <div class="rounded-3xl p-6 bg-vanilla ring-1 ring-rose/30 shadow">
+          <img src="images/m3.jpg" alt="Seasonal Special" onerror="this.classList.add('fallback')" class="rounded-2xl aspect-[4/3] object-cover"/>
+          <h3 class="mt-4 font-bold text-xl">Seasonal Special</h3>
+          <p class="text-cocoa/70">Ask for current fruits & flavours.</p>
+          <p class="mt-2 font-semibold">From $48 (serves 6–8)</p>
+        </div>
+      </div>
+      <div class="mt-8 text-center text-sm text-cocoa/70">
+        All desserts are made to order within 24 hours. Free delivery across Christchurch. Pay on delivery (cash or bank transfer).
+      </div>
+    </div>
+  </section>
+
+  <!-- Order (mailto, no server) -->
+  <section id="order" class="py-16 md:py-24 bg-vanilla/60 border-y border-rose/20">
+    <div class="mx-auto max-w-3xl px-4">
+      <h2 class="text-3xl font-extrabold text-center">Place an order</h2>
+      <p class="mt-3 text-center text-cocoa/70">We’ll contact you by phone or email to confirm. No online payment — pay on delivery.</p>
+
+      <form id="orderForm" class="mt-8 grid gap-4 rounded-3xl bg-vanilla p-6 ring-1 ring-rose/30 shadow">
+        <label class="hidden">Leave this empty<input name="company" type="text" tabindex="-1" autocomplete="off"></label>
+
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold">Your Name</label>
+            <input required name="name" type="text" class="mt-1 w-full rounded-xl border border-rose/30 bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-rose" placeholder="Jane Doe" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold">Phone</label>
+            <input required name="phone" type="tel" class="mt-1 w-full rounded-xl border border-rose/30 bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-rose" placeholder="021 000 0000" />
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold">Email</label>
+            <input required name="email" type="email" class="mt-1 w-full rounded-xl border border-rose/30 bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-rose" placeholder="you@example.com" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold">Desired Date</label>
+            <input required name="date" type="date" class="mt-1 w-full rounded-xl border border-rose/30 bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-rose" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold">Choose Dessert</label>
+          <select required name="product" class="mt-1 w-full rounded-xl border border-rose/30 bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-rose">
+            <option value="Berry Meringue Roll">Berry Meringue Roll</option>
+            <option value="Classic Pavlova Roll">Classic Pavlova Roll</option>
+            <option value="Seasonal Special">Seasonal Special</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold">Message / Special requests</label>
+          <textarea name="message" rows="4" class="mt-1 w-full rounded-xl border border-rose/30 bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-rose" placeholder="Allergies, card message, delivery time window…"></textarea>
+        </div>
+
+        <button type="submit" class="mt-2 inline-flex justify-center rounded-2xl bg-rose px-6 py-3 font-bold text-cocoa shadow hover:shadow-lg">Submit Order</button>
+        <p class="text-sm text-cocoa/70">Submitting opens your email app with the order details pre-filled. Send the email to complete.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-16 md:py-24">
+    <div class="mx-auto max-w-4xl px-4 text-center">
+      <h2 class="text-3xl md:text-4xl font-extrabold">Contact</h2>
+      <p class="mt-3 text-cocoa/80">Questions, custom ideas, large orders — we’d love to help.</p>
+      <div class="mt-6 flex items-center justify-center gap-4 text-sm">
+        <a href="mailto:hello@whynot.nz" class="rounded-xl border border-rose/40 bg-vanilla px-4 py-2 hover:bg-white">hello@whynot.nz</a>
+        <a href="tel:+64210000000" class="rounded-xl border border-rose/40 bg-vanilla px-4 py-2 hover:bg-white">+64 21 000 0000</a>
+        <a href="https://www.instagram.com/whynot.adessert" target="_blank" rel="noopener" class="rounded-xl border border-rose/40 bg-vanilla px-4 py-2 hover:bg-white">Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <!-- Footer -->
+  <footer class="py-8 border-t border-rose/20 text-center text-xs text-cocoa/70">
+    <div class="mx-auto max-w-6xl px-4 space-y-2">
+      <div>© <span id="y"></span> Why Not. Handmade meringue desserts in Christchurch.</div>
+      <div>Free delivery within Christchurch • Orders ready in 24 hours</div>
+      
+      <!-- Legal links -->
+      <div class="flex justify-center gap-4 font-semibold">
+        <a href="docks/Privacy_Policy.pdf" target="_blank" rel="noopener" class="text-rose hover:underline">
+          Privacy Policy
+        </a>
+        <a href="docks/Terms_and_Conditions.pdf" target="_blank" rel="noopener" class="text-rose hover:underline">
+          Terms & Conditions
+        </a>
+      </div>
+
+      <!-- Socials -->
+      <div class="flex justify-center gap-6 mt-3 text-cocoa">
+        <a href="https://www.instagram.com/whynot.adessert?igsh=bTkzOHo1NHhjeTE1" target="_blank" rel="noopener" aria-label="Instagram" class="hover:text-rose">
+          <!-- Instagram icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zm4.25 4A5.25 5.25 0 1 1 6.75 12.75 5.25 5.25 0 0 1 12 7.5zm0 1.5a3.75 3.75 0 1 0 3.75 3.75A3.75 3.75 0 0 0 12 9zM17.5 6a1 1 0 1 1-1 1 1 1 0 0 1 1-1z"/>
+          </svg>
+        </a>
+        <a href="https://www.tiktok.com/@whynot.adessert" target="_blank" rel="noopener" aria-label="TikTok" class="hover:text-rose">
+          <!-- TikTok icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12.5 2h3a6.5 6.5 0 0 0 6.5 6.5v3a9.5 9.5 0 0 1-6.5-2.5V17a7 7 0 1 1-7-7c.34 0 .67.03 1 .08V13a3.5 3.5 0 1 0 3.5 3.5V2z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <!-- Mailto logic: place at the end so DOM is ready -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const DEST_EMAIL = 'hello@whynot.nz'; // change if needed
+      const y = document.getElementById('y');
+      if (y) y.textContent = new Date().getFullYear();
+      const form = document.getElementById('orderForm');
+      if (!form) return;
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const hp = form.querySelector('input[name="company"]')?.value || '';
+        if (hp) return; // bot trap
+        const data = Object.fromEntries(new FormData(form));
+        if (!data.name || !data.phone || !data.email || !data.date || !data.product) return;
+        const subject = `New order: ${data.product} on ${data.date} — ${data.name}`;
+        const body = [
+          `Name: ${data.name}`,
+          `Phone: ${data.phone}`,
+          `Email: ${data.email}`,
+          `Desired date: ${data.date}`,
+          `Product: ${data.product}`,
+          '',
+          'Message:',
+          data.message || '-'
+        ].join('\n');
+        const mailto = `mailto:${DEST_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailto;
+      });
+    });
+  </script>
+</body>
+</html>
