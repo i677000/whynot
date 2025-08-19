@@ -1,0 +1,131 @@
+{
+  "name": "WhyNot Chat Widget API",
+  "nodes": [
+    {
+      "id": "wh-options",
+      "name": "Webhook OPTIONS /webhook/whynot-chat",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [ -400, -200 ],
+      "parameters": {
+        "httpMethod": "OPTIONS",
+        "path": "whynot-chat",
+        "responseMode": "onReceived",
+        "options": {
+          "responseCode": 204,
+          "responseHeaders": {
+            "entries": [
+              { "name": "Access-Control-Allow-Origin", "value": "https://whynot.osn.nz" },
+              { "name": "Access-Control-Allow-Headers", "value": "Content-Type" },
+              { "name": "Access-Control-Allow-Methods", "value": "POST, OPTIONS" }
+            ]
+          }
+        }
+      },
+      "credentials": {}
+    },
+    {
+      "id": "wh-post",
+      "name": "Webhook POST /webhook/whynot-chat",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [ -400, 200 ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whynot-chat",
+        "responseMode": "lastNode"
+      },
+      "credentials": {}
+    },
+    {
+      "id": "fn-validate",
+      "name": "Validate & Normalize",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [ -50, 200 ],
+      "parameters": {
+        "functionCode": "const b = items[0].json;\n// Basic validation\nif (!b.message || typeof b.message !== 'string') {\n  return [{ json: { error: 'message is required' }, pairedItem: { item: 0 } }];\n}\n// history: keep last 10\nconst history = Array.isArray(b.history) ? b.history.slice(-10) : [];\n// context defaults\nconst ctx = Object.assign({\n  business: 'Why Not',\n  city: 'Christchurch',\n  delivery: 'Free in Christchurch',\n  lead_time: '24 hours',\n  payment: 'Pay on delivery'\n}, b.context || {});\n\n// Prepare OpenAI Chat messages\nconst sys = `You are a friendly assistant for the dessert business \"${ctx.business}\" in ${ctx.city}.\n- Topics: desserts, flavours, menu, ordering, delivery (${ctx.delivery}), lead time (${ctx.lead_time}), payment (${ctx.payment}), NZ food safety and legal operation.\n- Always keep answers short, simple, polite.\n- If user is off-topic, gently redirect: \"I can help with ordering our desserts or delivery questions.\"\n- Never invent unavailable services. If unsure, say you’ll check and offer to take details.\n- Always include relevant business facts (delivery: ${ctx.delivery}, lead time: ${ctx.lead_time}, payment: ${ctx.payment}).`;\n\nconst chat = [ { role: 'system', content: sys } ];\nfor (const h of history) {\n  const role = (h.role === 'assistant') ? 'assistant' : 'user';\n  if (typeof h.text === 'string' && h.text.trim()) {\n    chat.push({ role, content: h.text.trim() });\n  }\n}\nchat.push({ role: 'user', content: b.message.trim() });\n\nreturn [{ json: { chat, ctx } }];"
+      }
+    },
+    {
+      "id": "ai-openai",
+      "name": "OpenAI Chat",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 4,
+      "position": [ 260, 200 ],
+      "parameters": {
+        "resource": "chat",
+        "operation": "createChatCompletion",
+        "model": "gpt-4o-mini",
+        "messages": "={{$json.chat}}",
+        "additionalFields": {
+          "temperature": 0.4,
+          "maxTokens": 300
+        }
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "OpenAI API (set in credentials)"
+        }
+      }
+    },
+    {
+      "id": "fn-shape-response",
+      "name": "Shape JSON",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [ 520, 200 ],
+      "parameters": {
+        "functionCode": "const choice = items[0].json.choices?.[0];\nlet reply = choice?.message?.content?.trim();\nif (!reply) reply = 'Sorry, I did not catch that. I can help with our desserts, delivery in Christchurch (free), lead time (24 hours), and payment on delivery.';\nreturn [{ json: { reply } }];"
+      }
+    },
+    {
+      "id": "respond",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [ 800, 200 ],
+      "parameters": {
+        "responseBody": "={\"reply\": $json[\"reply\"]}",
+        "responseCode": 200,
+        "responseHeaders": {
+          "entries": [
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Access-Control-Allow-Origin", "value": "https://whynot.osn.nz" },
+            { "name": "Access-Control-Allow-Headers", "value": "Content-Type" },
+            { "name": "Access-Control-Allow-Methods", "value": "POST, OPTIONS" }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook POST /webhook/whynot-chat": {
+      "main": [
+        [ { "node": "Validate & Normalize", "type": "main", "index": 0 } ]
+      ]
+    },
+    "Validate & Normalize": {
+      "main": [
+        [ { "node": "OpenAI Chat", "type": "main", "index": 0 } ]
+      ]
+    },
+    "OpenAI Chat": {
+      "main": [
+        [ { "node": "Shape JSON", "type": "main", "index": 0 } ]
+      ]
+    },
+    "Shape JSON": {
+      "main": [
+        [ { "node": "Respond to Webhook", "type": "main", "index": 0 } ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true
+  },
+  "staticData": null
+}
