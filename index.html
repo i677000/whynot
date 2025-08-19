@@ -67,10 +67,9 @@
 
 <script>
 // ==== CONFIG ====
-// ЗАМЕНИ на свой публичный webhook n8n (включи CORS в n8n или через прокси Nginx)
-const N8N_WEBHOOK_URL = 'https://your-n8n-domain.tld/webhook/whynot-chat';
+const N8N_WEBHOOK_URL = 'https://onsitenow.osn.nz/n8n/webhook/whynot-chat';
 
-// (необяз.) отправлять вместе с запросом базовый контекст
+// (optional) context sent with every message
 const BUSINESS_CONTEXT = {
   business: 'Why Not',
   city: 'Christchurch',
@@ -78,6 +77,16 @@ const BUSINESS_CONTEXT = {
   lead_time: '24 hours',
   payment: 'Pay on delivery',
 };
+
+// ==== CLIENT SESSION ID (for n8n memory) ====
+let sessionId = localStorage.getItem('wn_session_id');
+if (!sessionId) {
+  sessionId = (crypto.randomUUID ? crypto.randomUUID() :
+    ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c/4).toString(16))
+  );
+  localStorage.setItem('wn_session_id', sessionId);
+}
 
 // ==== UI helpers ====
 const $ = (s) => document.querySelector(s);
@@ -105,15 +114,12 @@ function addTyping() {
   const el = document.createElement('div');
   el.id = 'wn-typing';
   el.className = 'w-full flex justify-start';
-  el.innerHTML = `<div class="max-w-[85%] px-3 py-2 rounded-2xl text-sm shadow bg-white ring-1 ring-rose/30 text-cocoa/70">
-    typing<span class="animate-pulse">…</span></div>`;
+  el.innerHTML = `<div class="max-w-[85%] px-3 py-2 rounded-2xl text-sm shadow bg-white ring-1 ring-rose/30 text-cocoa/70">typing<span class="animate-pulse">…</span></div>`;
   log.appendChild(el);
   log.scrollTop = log.scrollHeight;
 }
-function removeTyping() {
-  const el = $('#wn-typing'); if (el) el.remove();
-}
-function escapeHTML(s){return s.replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[m]));}
+function removeTyping() { const el = $('#wn-typing'); if (el) el.remove(); }
+function escapeHTML(s){return s.replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#039;' }[m]));}
 function linkify(s){
   return s.replace(/(https?:\/\/[^\s)]+)|(\S+@\S+\.\S+)/g,(m)=>`<a class="text-rose underline" href="${m.startsWith('http')?m:`mailto:${m}`}" target="_blank" rel="noopener">${m}</a>`);
 }
@@ -127,9 +133,7 @@ launcher.addEventListener('click', ()=> { chat.classList.toggle('hidden'); });
 closer.addEventListener('click', ()=> chat.classList.add('hidden'));
 
 // restore previous messages (optional)
-if (convo.messages.length) {
-  convo.messages.forEach(m => addMsg(m.role, m.text));
-}
+if (convo.messages.length) { convo.messages.forEach(m => addMsg(m.role, m.text)); }
 
 // ==== Send ====
 form.addEventListener('submit', async (e) => {
@@ -140,23 +144,25 @@ form.addEventListener('submit', async (e) => {
   addMsg('user', text);
   convo.messages.push({ role: 'user', text }); save();
 
+  // disable while sending
+  const btn = form.querySelector('button[type="submit"]');
+  if (btn) btn.disabled = true;
   addTyping();
+
   try {
     const res = await fetch(N8N_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      // ты можешь поменять payload под свой n8n
       body: JSON.stringify({
         message: text,
-        history: convo.messages.slice(-10),  // краткая история
-        context: BUSINESS_CONTEXT
+        history: convo.messages.slice(-10),
+        context: BUSINESS_CONTEXT,
+        sessionId,                     // <-- added client session id
       }),
     });
 
     if (!res.ok) throw new Error('Bad response from n8n');
     const data = await res.json().catch(()=> ({}));
-
-    // ожидаем, что n8n вернёт { reply: "..." } либо текст
     const reply = (data && (data.reply || data.response || data.text)) || (await res.text());
     removeTyping();
     addMsg('assistant', reply);
@@ -165,6 +171,8 @@ form.addEventListener('submit', async (e) => {
     removeTyping();
     addMsg('assistant', 'Oops, something went wrong. Please try again later.');
     console.error(err);
+  } finally {
+    if (btn) btn.disabled = false;
   }
 });
 </script>
